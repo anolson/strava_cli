@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+$:.unshift File.expand_path("lib")
+
+require "strava_cli"
+require "dotenv"
+
+Dotenv.load
+StravaCli::CLI.start(ARGV)
