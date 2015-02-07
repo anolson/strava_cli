@@ -32,8 +32,23 @@ module StravaCli
         Launchy.open authorize_url
       end
 
+      private
+
       def authorize_url
-        "https://www.strava.com/oauth/authorize?client_id=3007&response_type=code&redirect_uri=http://localhost:4567/callback&scope=write"
+        "https://www.strava.com/oauth/authorize?#{query_string}"
+      end
+
+      def query_string
+        authorization_params.map { |k,v| "#{k}=#{v}" }.join("&")
+      end
+
+      def authorization_params
+        {
+          client_id: ENV['client_id'],
+          response_type: "code",
+          redirect_uri: "http://localhost:4567/callback",
+          scope: "write"
+        }
       end
     end
   end
