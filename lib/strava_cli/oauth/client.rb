@@ -12,9 +12,17 @@ module StravaCli
       end
 
       def access_token(code)
-        response = connection.post '/oauth/token', { client_id: client_id, client_secret: client_secret, code: code }
+        response = connection.post '/oauth/token', access_token_params(code)
 
         JSON.parse(response.body)['access_token'] if response.success?
+      end
+
+      def access_token_params(code)
+        {
+          client_id: client_id,
+          client_secret: client_secret,
+          code: code
+        }
       end
 
       private

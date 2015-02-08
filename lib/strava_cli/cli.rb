@@ -5,7 +5,7 @@ module StravaCli
 
     desc "login", "Login into Strava"
     def login
-      StravaCli::OAuth::Webflow.run
+      OAuth::Webflow.run
     end
 
     desc "whoami", "Display info about the current athlete"
@@ -17,11 +17,11 @@ module StravaCli
     private
 
     def client
-      @client ||= Client.from_credentials(credentials)
+      @client ||= Client.new(access_token)
     end
 
-    def credentials
-      @credentials ||= Credentials.read
+    def access_token
+      @credentials ||= OAuth::AccessToken.read
     end
   end
 end

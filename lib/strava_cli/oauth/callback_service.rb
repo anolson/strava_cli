@@ -10,7 +10,7 @@ module StravaCli
       end
 
       def wait_for_authentication
-        until AuthenticationState.authenticated?
+        until AuthorizationState.authorized?
           thread.join(1)
         end
       end
@@ -20,9 +20,13 @@ module StravaCli
         set :server, "reel"
 
         get("/callback") do
-          credentials = Credentials.new(params[:code])
-          credentials.exchange!
-          credentials.write
+          authorization_code = AuthorizationCode.new(params[:code])
+          access_token = authorization_code.exchange_for_access_token
+
+          if access_token.valid?
+            AuthorizationState.authorize!
+            access_token.write
+          end
         end
       end
     end
