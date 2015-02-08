@@ -1,6 +1,6 @@
 # StravaCli
 
-TODO: Write a gem description
+A command-line tool for Strava.
 
 ## Installation
 
